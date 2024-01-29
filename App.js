@@ -1,30 +1,44 @@
+import 'react-native-gesture-handler';
 import React from 'react';
-import { View, StyleSheet, Dimensions } from 'react-native';
-import Cards from './Screens/Cards';
+import {StyleSheet} from 'react-native';
+import 'react-native-gesture-handler';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {createDrawerNavigator} from "@react-navigation/drawer";
 
-const {width, height} = Dimensions.get('window');
+import HomeScreen from './ImageGallery/HomeScreen';
+import PhotoDetail from './ImageGallery/PhotoDetail';
+
+const StackNav =()=> {
+  const Stack = createNativeStackNavigator();
+
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
+     
+      <Stack.Screen name="Homex" component={HomeScreen} />
+      <Stack.Screen name="PhotoDetail" component={PhotoDetail} />
+      
+    </Stack.Navigator>
+  );
+}
+
 
 const App = () => {
+  const Drawer = createDrawerNavigator();
   return (
-    <View style={styles.container}>
-      <Cards color="#fcd299" cardWidth={width-150} cardHeight={height/1.55} />
-      <Cards color="#d3d3d3" cardWidth={width-150} cardHeight={height/1.6} />
-      <Cards color="pink" cardWidth={width-150} cardHeight={height/1.65} />
-      <Cards color="#ADD8E6" cardWidth={width-150} cardHeight={height/1.7} />
-      {/* Add more Cards components as needed */}
-    </View>
+    <NavigationContainer>
+     <Drawer.Navigator>
+        <Drawer.Screen name="Home" component={StackNav} />
+     </Drawer.Navigator>
+  </NavigationContainer>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
-    top: height/5,
-    left: width/5
-  }
+  
 });
 
 export default App;
